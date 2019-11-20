@@ -116,7 +116,7 @@ metadata {
     tiles(scale: 2) {
         multiAttributeTile(name:"thermostatMulti", type:"thermostat", width:6, height:4) {
             tileAttribute("device.temperature", key: "PRIMARY_CONTROL") {
-                attributeState("temp", label:'${currentValue}°', unit:"dC", defaultState: true)
+                attributeState("temp", label:'${currentValue}°', unit:"°C", defaultState: true)
             }
             tileAttribute("device.temperature", key: "VALUE_CONTROL") {
                 attributeState("VALUE_UP", action: "setpointUp")
@@ -138,10 +138,10 @@ metadata {
                 attributeState("emergency heat", label: 'e-heat')
             }
             tileAttribute("device.heatingSetpoint", key: "HEATING_SETPOINT") {
-                attributeState("default", label: '${currentValue}', unit: "dC", defaultState: true)
+                attributeState("default", label: '${currentValue}', unit: "°C", defaultState: true)
             }
             tileAttribute("device.coolingSetpoint", key: "COOLING_SETPOINT") {
-                attributeState("default", label: '${currentValue}', unit: "dC", defaultState: true)
+                attributeState("default", label: '${currentValue}', unit: "°C", defaultState: true)
             }
         }
 
@@ -163,7 +163,7 @@ metadata {
         }
 
         valueTile("heatingSetpoint", "device.heatingSetpoint", width: 2, height: 2, decoration: "flat") {
-            state "heat", label:'Heat\n${currentValue}°', unit: "dC", backgroundColor:"#E86D13"
+            state "heat", label:'Heat\n${currentValue}°', unit: "°C", backgroundColor:"#E86D13"
         }
         standardTile("heatDown", "device.temperature", width: 1, height: 1, decoration: "flat") {
             state "default", label: "heat", action: "heatDown", icon: "st.thermostat.thermostat-down"
@@ -173,7 +173,7 @@ metadata {
         }
 
         valueTile("coolingSetpoint", "device.coolingSetpoint", width: 2, height: 2, decoration: "flat") {
-            state "cool", label: 'Cool\n${currentValue}°', unit: "dC", backgroundColor: "#00A0DC"
+            state "cool", label: 'Cool\n${currentValue}°', unit: "°C", backgroundColor: "#00A0DC"
         }
         standardTile("coolDown", "device.temperature", width: 1, height: 1, decoration: "flat") {
             state "default", label: "cool", action: "coolDown", icon: "st.thermostat.thermostat-down"
@@ -183,7 +183,7 @@ metadata {
         }
 
         valueTile("roomTemp", "device.temperature", width: 2, height: 1, decoration: "flat") {
-            state "default", label:'${currentValue}°', unit: "dC", backgroundColors: [
+            state "default", label:'${currentValue}°', unit: "°C", backgroundColors: [
                 // Celsius Color Range
                 [value:  0, color: "#153591"],
                 [value:  7, color: "#1E9CBB"],
@@ -306,15 +306,15 @@ private setDeviceHealth(String healthState) {
 private initialize() {
     log.trace "Executing 'initialize'"
 
-    sendEvent(name: "temperature", value: DEFAULT_TEMPERATURE, unit: "dC")
+    sendEvent(name: "temperature", value: DEFAULT_TEMPERATURE, unit: "°C")
     sendEvent(name: "humidity", value: DEFAULT_HUMIDITY, unit: "%")
-    sendEvent(name: "heatingSetpoint", value: DEFAULT_HEATING_SETPOINT, unit: "dC")
-    sendEvent(name: "heatingSetpointMin", value: HEATING_SETPOINT_RANGE.getFrom(), unit: "dC")
-    sendEvent(name: "heatingSetpointMax", value: HEATING_SETPOINT_RANGE.getTo(), unit: "dC")
-    sendEvent(name: "thermostatSetpoint", value: DEFAULT_THERMOSTAT_SETPOINT, unit: "dC")
-    sendEvent(name: "coolingSetpoint", value: DEFAULT_COOLING_SETPOINT, unit: "dC")
-    sendEvent(name: "coolingSetpointMin", value: COOLING_SETPOINT_RANGE.getFrom(), unit: "dC")
-    sendEvent(name: "coolingSetpointMax", value: COOLING_SETPOINT_RANGE.getTo(), unit: "dC")
+    sendEvent(name: "heatingSetpoint", value: DEFAULT_HEATING_SETPOINT, unit: "°C")
+    sendEvent(name: "heatingSetpointMin", value: HEATING_SETPOINT_RANGE.getFrom(), unit: "°C")
+    sendEvent(name: "heatingSetpointMax", value: HEATING_SETPOINT_RANGE.getTo(), unit: "°C")
+    sendEvent(name: "thermostatSetpoint", value: DEFAULT_THERMOSTAT_SETPOINT, unit: "°C")
+    sendEvent(name: "coolingSetpoint", value: DEFAULT_COOLING_SETPOINT, unit: "°C")
+    sendEvent(name: "coolingSetpointMin", value: COOLING_SETPOINT_RANGE.getFrom(), unit: "°C")
+    sendEvent(name: "coolingSetpointMax", value: COOLING_SETPOINT_RANGE.getTo(), unit: "°C")
     sendEvent(name: "thermostatMode", value: DEFAULT_MODE)
     sendEvent(name: "thermostatFanMode", value: DEFAULT_FAN_MODE)
     sendEvent(name: "thermostatOperatingState", value: DEFAULT_OP_STATE)
@@ -348,10 +348,10 @@ def refresh() {
     sendEvent(name: "thermostatMode", value: getThermostatMode())
     sendEvent(name: "thermostatFanMode", value: getFanMode())
     sendEvent(name: "thermostatOperatingState", value: getOperatingState())
-    sendEvent(name: "thermostatSetpoint", value: getThermostatSetpoint(), unit: "dC")
-    sendEvent(name: "coolingSetpoint", value: getCoolingSetpoint(), unit: "dC")
-    sendEvent(name: "heatingSetpoint", value: getHeatingSetpoint(), unit: "dC")
-    sendEvent(name: "temperature", value: getTemperature(), unit: "dC")
+    sendEvent(name: "thermostatSetpoint", value: getThermostatSetpoint(), unit: "°C")
+    sendEvent(name: "coolingSetpoint", value: getCoolingSetpoint(), unit: "°C")
+    sendEvent(name: "heatingSetpoint", value: getHeatingSetpoint(), unit: "°C")
+    sendEvent(name: "temperature", value: getTemperature(), unit: "°C")
     sendEvent(name: "humidity", value: getHumidityPercent(), unit: "%")
     done()
 }
