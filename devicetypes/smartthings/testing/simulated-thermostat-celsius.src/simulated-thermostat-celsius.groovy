@@ -118,7 +118,7 @@ metadata {
             tileAttribute("device.temperature", key: "PRIMARY_CONTROL") {
                 attributeState("temp", label:'${currentValue}°', unit:"°C", defaultState: true)
             }
-            tileAttribute("device.temperature", key: "VALUE_CONTROL") {
+            tileAttribute("device.thermostatSetpoint", key: "VALUE_CONTROL") {
                 attributeState("VALUE_UP", action: "setpointUp")
                 attributeState("VALUE_DOWN", action: "setpointDown")
             }
