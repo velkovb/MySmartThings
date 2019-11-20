@@ -137,12 +137,13 @@ metadata {
                 attributeState("auto", label: '${name}')
                 attributeState("emergency heat", label: 'e-heat')
             }
-            tileAttribute("device.heatingSetpoint", key: "HEATING_SETPOINT") {
+            /*tileAttribute("device.heatingSetpoint", key: "HEATING_SETPOINT") {
                 attributeState("default", label: '${currentValue}', unit: "°C", defaultState: true)
             }
             tileAttribute("device.coolingSetpoint", key: "COOLING_SETPOINT") {
                 attributeState("default", label: '${currentValue}', unit: "°C", defaultState: true)
             }
+            */
         }
 
         standardTile("mode", "device.thermostatMode", width: 2, height: 2, decoration: "flat") {
