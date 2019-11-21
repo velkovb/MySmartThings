@@ -147,8 +147,8 @@ metadata {
         
         standardTile("mode", "device.thermostatMode", width: 2, height: 2, decoration: "flat") {
             state "off",            action: "cycleMode", nextState: "updating", icon: "st.thermostat.heating-cooling-off", backgroundColor: "#CCCCCC"
-            state "heat",           action: "cycleMode", nextState: "updating", icon: "st.thermostat.heat", defaultState: true, label: "Day"
-            state "cool",           action: "cycleMode", nextState: "updating", icon: "st.thermostat.cool", label: "Night"
+            state "heat",           action: "cycleMode", nextState: "updating", defaultState: true, label: "Day"//, icon: "st.thermostat.heat"
+            state "cool",           action: "cycleMode", nextState: "updating", label: "Night"//, icon: "st.thermostat.cool"
             //state "auto",           action: "cycleMode", nextState: "updating", icon: "st.thermostat.auto"
             //state "emergency heat", action: "cycleMode", nextState: "updating", icon: "st.thermostat.emergency-heat"
             state "updating", label: "Working"
