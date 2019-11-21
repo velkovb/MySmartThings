@@ -127,10 +127,10 @@ metadata {
             }
             tileAttribute("device.thermostatOperatingState", key: "OPERATING_STATE") {
                 attributeState("idle", backgroundColor: "#FFFFFF")
-                attributeState("day heating", backgroundColor: "#E86D13")
-                attributeState("night heating", backgroundColor: "#00A0DC")
-                //attributeState("heating", backgroundColor: "#E86D13")
-                //attributeState("cooling", backgroundColor: "#00A0DC")
+                //attributeState("day heating", backgroundColor: "#E86D13")
+                //attributeState("night heating", backgroundColor: "#00A0DC")
+                attributeState("heating", backgroundColor: "#E86D13")
+                attributeState("cooling", backgroundColor: "#00A0DC")
             }
             tileAttribute("device.thermostatMode", key: "THERMOSTAT_MODE") {
                 attributeState("off",  label: '${name}')
@@ -183,7 +183,7 @@ metadata {
         standardTile("coolUp", "device.temperature", width: 1, height: 1, decoration: "flat") {
             state "default", label: "temp", action: "coolUp", icon: "st.thermostat.thermostat-up"
         }
-        /*
+        
         valueTile("roomTemp", "device.temperature", width: 2, height: 1, decoration: "flat") {
             state "default", label:'${currentValue}°', unit: "°C", backgroundColors: [
                 // Celsius Color Range
@@ -204,7 +204,7 @@ metadata {
                 [value: 96, color: "#BC2323"]
             ]
         }
-
+        /*
         standardTile("tempDown", "device.temperature", width: 1, height: 1, decoration: "flat") {
             state "default", label: "temp", action: "tempDown", icon: "st.thermostat.thermostat-down"
         }
@@ -259,7 +259,7 @@ metadata {
             "deviceHealthControl", "refresh",// "reset",
             //"blank1x1", "simControlLabel", "blank1x1",
             //"tempDown", "tempUp", "humiditySliderLabel", "humiditySlider",
-            //"roomTemp"
+            "roomTemp"
         ])
     }
 }
