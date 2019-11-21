@@ -259,7 +259,7 @@ metadata {
             "deviceHealthControl", "refresh",// "reset",
             //"blank1x1", "simControlLabel", "blank1x1",
             //"tempDown", "tempUp", "humiditySliderLabel", "humiditySlider",
-            "roomTemp"
+            //"roomTemp"
         ])
     }
 }
