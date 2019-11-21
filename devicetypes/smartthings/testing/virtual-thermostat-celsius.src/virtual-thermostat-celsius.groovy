@@ -46,7 +46,7 @@ import groovy.transform.Field
 
 @Field final List HEAT_ONLY_MODES = [MODE.HEAT]
 @Field final List COOL_ONLY_MODES = [MODE.COOL]
-@Field final List DUAL_SETPOINT_MODES = [MODE.HEAT, MODE.COOL]
+//@Field final List DUAL_SETPOINT_MODES = [MODE.AUTO]
 @Field final List RUNNING_OP_STATES = [OP_STATE.HEATING, OP_STATE.COOLING]
 
 // config - TODO: move these to a pref page
@@ -464,7 +464,7 @@ private setHeatingSetpointInternal(Double degreesF) {
 private heatUp() {
     log.trace "Executing 'heatUp'"
     def newHsp = getHeatingSetpoint() + 1
-    if (getThermostatMode() in HEAT_ONLY_MODES + DUAL_SETPOINT_MODES) {
+    if (getThermostatMode() in HEAT_ONLY_MODES) {
         setHeatingSetpoint(newHsp)
     }
     done()
@@ -473,7 +473,7 @@ private heatUp() {
 private heatDown() {
     log.trace "Executing 'heatDown'"
     def newHsp = getHeatingSetpoint() - 1
-    if (getThermostatMode() in HEAT_ONLY_MODES + DUAL_SETPOINT_MODES) {
+    if (getThermostatMode() in HEAT_ONLY_MODES) {
         setHeatingSetpoint(newHsp)
     }
     done()
@@ -500,7 +500,7 @@ private setCoolingSetpointInternal(Double degreesF) {
 private coolUp() {
     log.trace "Executing 'coolUp'"
     def newCsp = getCoolingSetpoint() + 1
-    if (getThermostatMode() in COOL_ONLY_MODES + DUAL_SETPOINT_MODES) {
+    if (getThermostatMode() in COOL_ONLY_MODES) {
         setCoolingSetpoint(newCsp)
     }
     done()
@@ -509,7 +509,7 @@ private coolUp() {
 private coolDown() {
     log.trace "Executing 'coolDown'"
     def newCsp = getCoolingSetpoint() - 1
-    if (getThermostatMode() in COOL_ONLY_MODES + DUAL_SETPOINT_MODES) {
+    if (getThermostatMode() in COOL_ONLY_MODES) {
         setCoolingSetpoint(newCsp)
     }
     done()
@@ -628,12 +628,20 @@ private proposeSetpoints(Integer heatSetpoint, Integer coolSetpoint, String prio
         if (newHeatSetpoint != proposedHeatSetpoint) {
             log.warn "proposed heat setpoint $proposedHeatSetpoint is out of bounds. Modifying..."
         }
-    } else if (mode in COOL_ONLY_MODES) {
         newCoolSetpoint = boundInt(proposedCoolSetpoint, FULL_SETPOINT_RANGE)
         if (newCoolSetpoint != proposedCoolSetpoint) {
             log.warn "proposed cool setpoint $proposedCoolSetpoint is out of bounds. Modifying..."
         }
-    } else if (mode in DUAL_SETPOINT_MODES) {
+    } else if (mode in COOL_ONLY_MODES) {
+        newHeatSetpoint = boundInt(proposedHeatSetpoint, FULL_SETPOINT_RANGE)
+        if (newHeatSetpoint != proposedHeatSetpoint) {
+            log.warn "proposed heat setpoint $proposedHeatSetpoint is out of bounds. Modifying..."
+        }
+        newCoolSetpoint = boundInt(proposedCoolSetpoint, FULL_SETPOINT_RANGE)
+        if (newCoolSetpoint != proposedCoolSetpoint) {
+            log.warn "proposed cool setpoint $proposedCoolSetpoint is out of bounds. Modifying..."
+        }
+    } /*else if (mode in DUAL_SETPOINT_MODES) {
         if (prioritySetpointType == SETPOINT_TYPE.HEATING) {
             newHeatSetpoint = boundInt(proposedHeatSetpoint, HEATING_SETPOINT_RANGE)
             IntRange customCoolingSetpointRange = ((newHeatSetpoint + AUTO_MODE_SETPOINT_SPREAD)..COOLING_SETPOINT_RANGE.getTo())
@@ -643,7 +651,7 @@ private proposeSetpoints(Integer heatSetpoint, Integer coolSetpoint, String prio
             IntRange customHeatingSetpointRange = (HEATING_SETPOINT_RANGE.getFrom()..(newCoolSetpoint - AUTO_MODE_SETPOINT_SPREAD))
             newHeatSetpoint = boundInt(proposedHeatSetpoint, customHeatingSetpointRange)
         }
-    } else if (mode == MODE.OFF) {
+    } */else if (mode == MODE.OFF) {
         log.debug "Thermostat is off - no setpoints will be modified"
     } else {
         log.warn "Unknown/unhandled Thermostat mode: $mode"
@@ -677,14 +685,14 @@ private evaluateOperatingState(Map overrides) {
     Boolean isHeating = false
     Boolean isCooling = false
     Boolean isIdle = false
-    if (tsMode in HEAT_ONLY_MODES + DUAL_SETPOINT_MODES) {
+    if (tsMode in HEAT_ONLY_MODES) {
         if (heatingSetpoint - currentTemp >= THRESHOLD_DEGREES) {
             isHeating = true
             setOperatingState(OP_STATE.HEATING)
         }
         sendEvent(name: "thermostatSetpoint", value: heatingSetpoint)
     }
-    if (tsMode in COOL_ONLY_MODES + DUAL_SETPOINT_MODES && !isHeating) {
+    if (tsMode in COOL_ONLY_MODES && !isHeating) {
         if (currentTemp - coolingSetpoint >= THRESHOLD_DEGREES) {
             isCooling = true
             setOperatingState(OP_STATE.COOLING)
