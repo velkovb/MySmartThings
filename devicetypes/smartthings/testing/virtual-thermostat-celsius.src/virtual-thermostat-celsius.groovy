@@ -127,10 +127,10 @@ metadata {
             }
             tileAttribute("device.thermostatOperatingState", key: "OPERATING_STATE") {
                 attributeState("idle", backgroundColor: "#FFFFFF")
-                //attributeState("day heating", backgroundColor: "#E86D13")
-                //attributeState("night heating", backgroundColor: "#00A0DC")
-                attributeState("heating", backgroundColor: "#E86D13")
-                attributeState("cooling", backgroundColor: "#00A0DC")
+                attributeState("day heating", backgroundColor: "#E86D13")
+                attributeState("night heating", backgroundColor: "#00A0DC")
+                //attributeState("heating", backgroundColor: "#E86D13")
+                //attributeState("cooling", backgroundColor: "#00A0DC")
             }
             tileAttribute("device.thermostatMode", key: "THERMOSTAT_MODE") {
                 attributeState("off",  label: '${name}')
@@ -146,7 +146,7 @@ metadata {
                 attributeState("default", label: '${currentValue}', unit: "°C", defaultState: true)
             }
         }
-
+        /*
         standardTile("mode", "device.thermostatMode", width: 2, height: 2, decoration: "flat") {
             state "off",            action: "cycleMode", nextState: "updating", icon: "st.thermostat.heating-cooling-off", backgroundColor: "#CCCCCC", defaultState: true
             state "heat",           action: "cycleMode", nextState: "updating", icon: "st.thermostat.heat"
@@ -155,7 +155,7 @@ metadata {
             //state "emergency heat", action: "cycleMode", nextState: "updating", icon: "st.thermostat.emergency-heat"
             state "updating", label: "Working"
         }
-        /*
+        
         standardTile("fanMode", "device.thermostatFanMode", width: 2, height: 2, decoration: "flat") {
             state "off",       action: "cycleFanMode", nextState: "updating", icon: "st.thermostat.fan-off", backgroundColor: "#CCCCCC", defaultState: true
             state "auto",      action: "cycleFanMode", nextState: "updating", icon: "st.thermostat.fan-auto"
