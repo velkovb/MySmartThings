@@ -216,14 +216,14 @@ metadata {
         valueTile("simControlLabel", "device.switch", width: 4, height: 1, decoration: "flat") {
             state "default", label: "Simulated Environment Control"
         }
-        */
+        
         valueTile("blank1x1", "device.switch", width: 1, height: 1, decoration: "flat") {
             state "default", label: ""
         }
         valueTile("blank2x1", "device.switch", width: 2, height: 1, decoration: "flat") {
             state "default", label: ""
         }
-        /*
+        
         valueTile("humiditySliderLabel", "device.humidity", width: 3, height: 1, decoration: "flat") {
             state "default", label: 'Simulated Humidity: ${currentValue}%'
         }
@@ -259,7 +259,7 @@ metadata {
             "deviceHealthControl", "refresh",// "reset",
             //"blank1x1", "simControlLabel", "blank1x1",
             //"tempDown", "tempUp", "humiditySliderLabel", "humiditySlider",
-            "roomTemp"
+            //"roomTemp"
         ])
     }
 }
@@ -319,7 +319,7 @@ private initialize() {
     sendEvent(name: "coolingSetpointMin", value: COOLING_SETPOINT_RANGE.getFrom(), unit: "°C")
     sendEvent(name: "coolingSetpointMax", value: COOLING_SETPOINT_RANGE.getTo(), unit: "°C")
     sendEvent(name: "thermostatMode", value: DEFAULT_MODE)
-    sendEvent(name: "thermostatFanMode", value: DEFAULT_FAN_MODE)
+    //sendEvent(name: "thermostatFanMode", value: DEFAULT_FAN_MODE)
     sendEvent(name: "thermostatOperatingState", value: DEFAULT_OP_STATE)
 
     state.isHvacRunning = false
@@ -349,7 +349,7 @@ def parse(String description) {
 def refresh() {
     log.trace "Executing refresh"
     sendEvent(name: "thermostatMode", value: getThermostatMode())
-    sendEvent(name: "thermostatFanMode", value: getFanMode())
+    //sendEvent(name: "thermostatFanMode", value: getFanMode())
     sendEvent(name: "thermostatOperatingState", value: getOperatingState())
     sendEvent(name: "thermostatSetpoint", value: getThermostatSetpoint(), unit: "°C")
     sendEvent(name: "coolingSetpoint", value: getCoolingSetpoint(), unit: "°C")
@@ -387,7 +387,7 @@ private String cycleMode() {
 private Boolean isThermostatOff() {
     return getThermostatMode() == MODE.OFF
 }
-
+/*
 // Fan mode
 private String getFanMode() {
     return device.currentValue("thermostatFanMode") ?: DEFAULT_FAN_MODE
@@ -408,7 +408,7 @@ private String cycleFanMode() {
     done()
     return nextMode
 }
-
+*/
 private String nextListElement(List uniqueList, currentElt) {
     if (uniqueList != uniqueList.unique().asList()) {
         throw InvalidPararmeterException("Each element of the List argument must be unique.")
@@ -466,7 +466,7 @@ private setHeatingSetpointInternal(Double degreesF) {
 private heatUp() {
     log.trace "Executing 'heatUp'"
     def newHsp = getHeatingSetpoint() + 1
-    if (getThermostatMode() in HEAT_ONLY_MODES + DUAL_SETPOINT_MODES) {
+    if (getThermostatMode() in HEAT_ONLY_MODES) {
         setHeatingSetpoint(newHsp)
     }
     done()
@@ -475,7 +475,7 @@ private heatUp() {
 private heatDown() {
     log.trace "Executing 'heatDown'"
     def newHsp = getHeatingSetpoint() - 1
-    if (getThermostatMode() in HEAT_ONLY_MODES + DUAL_SETPOINT_MODES) {
+    if (getThermostatMode() in HEAT_ONLY_MODES) {
         setHeatingSetpoint(newHsp)
     }
     done()
@@ -502,7 +502,7 @@ private setCoolingSetpointInternal(Double degreesF) {
 private coolUp() {
     log.trace "Executing 'coolUp'"
     def newCsp = getCoolingSetpoint() + 1
-    if (getThermostatMode() in COOL_ONLY_MODES + DUAL_SETPOINT_MODES) {
+    if (getThermostatMode() in COOL_ONLY_MODES) {
         setCoolingSetpoint(newCsp)
     }
     done()
@@ -511,7 +511,7 @@ private coolUp() {
 private coolDown() {
     log.trace "Executing 'coolDown'"
     def newCsp = getCoolingSetpoint() - 1
-    if (getThermostatMode() in COOL_ONLY_MODES + DUAL_SETPOINT_MODES) {
+    if (getThermostatMode() in COOL_ONLY_MODES) {
         setCoolingSetpoint(newCsp)
     }
     done()
@@ -523,7 +523,7 @@ private setpointUp() {
     String mode = getThermostatMode()
     if (mode in COOL_ONLY_MODES) {
         coolUp()
-    } else if (mode in HEAT_ONLY_MODES + DUAL_SETPOINT_MODES) {
+    } else if (mode in HEAT_ONLY_MODES) {
         heatUp()
     }
     done()
@@ -532,7 +532,7 @@ private setpointUp() {
 private setpointDown() {
     log.trace "Executing 'setpointDown'"
     String mode = getThermostatMode()
-    if (mode in COOL_ONLY_MODES + DUAL_SETPOINT_MODES) {
+    if (mode in COOL_ONLY_MODES) {
         coolDown()
     } else if (mode in HEAT_ONLY_MODES) {
         heatDown()
@@ -635,7 +635,7 @@ private proposeSetpoints(Integer heatSetpoint, Integer coolSetpoint, String prio
         if (newCoolSetpoint != proposedCoolSetpoint) {
             log.warn "proposed cool setpoint $proposedCoolSetpoint is out of bounds. Modifying..."
         }
-    } else if (mode in DUAL_SETPOINT_MODES) {
+    } /*else if (mode in DUAL_SETPOINT_MODES) {
         if (prioritySetpointType == SETPOINT_TYPE.HEATING) {
             newHeatSetpoint = boundInt(proposedHeatSetpoint, HEATING_SETPOINT_RANGE)
             IntRange customCoolingSetpointRange = ((newHeatSetpoint + AUTO_MODE_SETPOINT_SPREAD)..COOLING_SETPOINT_RANGE.getTo())
@@ -645,7 +645,7 @@ private proposeSetpoints(Integer heatSetpoint, Integer coolSetpoint, String prio
             IntRange customHeatingSetpointRange = (HEATING_SETPOINT_RANGE.getFrom()..(newCoolSetpoint - AUTO_MODE_SETPOINT_SPREAD))
             newHeatSetpoint = boundInt(proposedHeatSetpoint, customHeatingSetpointRange)
         }
-    } else if (mode == MODE.OFF) {
+    } */else if (mode == MODE.OFF) {
         log.debug "Thermostat is off - no setpoints will be modified"
     } else {
         log.warn "Unknown/unhandled Thermostat mode: $mode"
@@ -679,14 +679,14 @@ private evaluateOperatingState(Map overrides) {
     Boolean isHeating = false
     Boolean isCooling = false
     Boolean isIdle = false
-    if (tsMode in HEAT_ONLY_MODES + DUAL_SETPOINT_MODES) {
+    if (tsMode in HEAT_ONLY_MODES) {
         if (heatingSetpoint - currentTemp >= THRESHOLD_DEGREES) {
             isHeating = true
             setOperatingState(OP_STATE.HEATING)
         }
         sendEvent(name: "thermostatSetpoint", value: heatingSetpoint)
     }
-    if (tsMode in COOL_ONLY_MODES + DUAL_SETPOINT_MODES && !isHeating) {
+    if (tsMode in COOL_ONLY_MODES && !isHeating) {
         if (currentTemp - coolingSetpoint >= THRESHOLD_DEGREES) {
             isCooling = true
             setOperatingState(OP_STATE.COOLING)
@@ -697,7 +697,7 @@ private evaluateOperatingState(Map overrides) {
         sendEvent(name: "thermostatSetpoint", value: heatingSetpoint)
     }
     if (isHeating || isCooling) {
-        startSimHvac() // we need to run the HVAC
+        //startSimHvac() // we need to run the HVAC
     } else {
         setOperatingState(OP_STATE.IDLE)
     }
