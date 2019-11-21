@@ -183,7 +183,7 @@ metadata {
         standardTile("coolUp", "device.temperature", width: 1, height: 1, decoration: "flat") {
             state "default", label: "temp", action: "coolUp", icon: "st.thermostat.thermostat-up"
         }
-
+        /*
         valueTile("roomTemp", "device.temperature", width: 2, height: 1, decoration: "flat") {
             state "default", label:'${currentValue}°', unit: "°C", backgroundColors: [
                 // Celsius Color Range
@@ -204,7 +204,7 @@ metadata {
                 [value: 96, color: "#BC2323"]
             ]
         }
-        /*
+
         standardTile("tempDown", "device.temperature", width: 1, height: 1, decoration: "flat") {
             state "default", label: "temp", action: "tempDown", icon: "st.thermostat.thermostat-down"
         }
@@ -232,7 +232,7 @@ metadata {
             state "humidity", action: "setHumidityPercent"
         }
         */
-        standardTile("refresh", "device.switch", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
+        standardTile("refresh", "device.switch", inactiveLabel: false, decoration: "flat", width: 1, height: 1) {
             state "default", label: "", action: "refresh", icon: "st.secondary.refresh"
         }
         /*
@@ -240,7 +240,7 @@ metadata {
             state "default", label: "Reset to Defaults", action: "configure"
         }
         */
-        standardTile("deviceHealthControl", "device.healthStatus", decoration: "flat", width: 2, height: 2, inactiveLabel: false) {
+        standardTile("deviceHealthControl", "device.healthStatus", decoration: "flat", width: 1, height: 1, inactiveLabel: false) {
             state "online",  label: "ONLINE", backgroundColor: "#00A0DC", action: "markDeviceOffline", icon: "st.Health & Wellness.health9", nextState: "goingOffline", defaultState: true
             state "offline", label: "OFFLINE", backgroundColor: "#E86D13", action: "markDeviceOnline", icon: "st.Health & Wellness.health9", nextState: "goingOnline"
             state "goingOnline", label: "Going ONLINE", backgroundColor: "#FFFFFF", icon: "st.Health & Wellness.health9"
