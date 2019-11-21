@@ -146,16 +146,16 @@ metadata {
                 attributeState("default", label: '${currentValue}', unit: "°C", defaultState: true)
             }
         }
-        /*
+        
         standardTile("mode", "device.thermostatMode", width: 2, height: 2, decoration: "flat") {
-            state "off",            action: "cycleMode", nextState: "updating", icon: "st.thermostat.heating-cooling-off", backgroundColor: "#CCCCCC", defaultState: true
-            state "heat",           action: "cycleMode", nextState: "updating", icon: "st.thermostat.heat"
+            state "off",            action: "cycleMode", nextState: "updating", icon: "st.thermostat.heating-cooling-off", backgroundColor: "#CCCCCC"
+            state "heat",           action: "cycleMode", nextState: "updating", icon: "st.thermostat.heat", defaultState: true
             state "cool",           action: "cycleMode", nextState: "updating", icon: "st.thermostat.cool"
             //state "auto",           action: "cycleMode", nextState: "updating", icon: "st.thermostat.auto"
             //state "emergency heat", action: "cycleMode", nextState: "updating", icon: "st.thermostat.emergency-heat"
             state "updating", label: "Working"
         }
-        
+        /*
         standardTile("fanMode", "device.thermostatFanMode", width: 2, height: 2, decoration: "flat") {
             state "off",       action: "cycleFanMode", nextState: "updating", icon: "st.thermostat.fan-off", backgroundColor: "#CCCCCC", defaultState: true
             state "auto",      action: "cycleFanMode", nextState: "updating", icon: "st.thermostat.fan-auto"
