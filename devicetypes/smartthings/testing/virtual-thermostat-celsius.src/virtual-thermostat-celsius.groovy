@@ -17,25 +17,25 @@ import groovy.transform.Field
 @Field final Map      MODE = [
     OFF:   "off",
     HEAT:  "heat",
-    AUTO:  "auto",
+    //AUTO:  "auto",
     COOL:  "cool",
-    EHEAT: "emergency heat"
+    //EHEAT: "emergency heat"
 ]
 
-@Field final Map      FAN_MODE = [
-    OFF:       "off",
-    AUTO:      "auto",
-    CIRCULATE: "circulate",
-    ON:        "on"
-]
+//@Field final Map      FAN_MODE = [
+//    OFF:       "off",
+//    AUTO:      "auto",
+//    CIRCULATE: "circulate",
+//    ON:        "on"
+//]
 
 @Field final Map      OP_STATE = [
     COOLING:   "cooling",
     HEATING:   "heating",
-    FAN:       "fan only",
+    //FAN:       "fan only",
     PEND_COOL: "pending cool",
     PEND_HEAT: "pending heat",
-    VENT_ECO:  "vent economizer",
+    //VENT_ECO:  "vent economizer",
     IDLE:      "idle"
 ]
 
@@ -44,14 +44,14 @@ import groovy.transform.Field
     HEATING: "heating"
 ]
 
-@Field final List HEAT_ONLY_MODES = [MODE.HEAT, MODE.EHEAT]
+@Field final List HEAT_ONLY_MODES = [MODE.HEAT]
 @Field final List COOL_ONLY_MODES = [MODE.COOL]
-@Field final List DUAL_SETPOINT_MODES = [MODE.AUTO]
+//@Field final List DUAL_SETPOINT_MODES = [MODE.AUTO]
 @Field final List RUNNING_OP_STATES = [OP_STATE.HEATING, OP_STATE.COOLING]
 
 // config - TODO: move these to a pref page
-@Field List SUPPORTED_MODES = [MODE.OFF, MODE.HEAT, MODE.AUTO, MODE.COOL, MODE.EHEAT]
-@Field List SUPPORTED_FAN_MODES = [FAN_MODE.OFF, FAN_MODE.AUTO, FAN_MODE.ON]
+@Field List SUPPORTED_MODES = [MODE.OFF, MODE.HEAT, MODE.COOL]
+//@Field List SUPPORTED_FAN_MODES = [FAN_MODE.OFF, FAN_MODE.AUTO, FAN_MODE.ON]
 
 @Field final Float    THRESHOLD_DEGREES = 1.0
 @Field final Integer  SIM_HVAC_CYCLE_SECONDS = 15
@@ -64,25 +64,25 @@ import groovy.transform.Field
 
 // derivatives
 @Field final IntRange FULL_SETPOINT_RANGE = (MIN_SETPOINT..MAX_SETPOINT)
-@Field final IntRange HEATING_SETPOINT_RANGE = (MIN_SETPOINT..(MAX_SETPOINT - AUTO_MODE_SETPOINT_SPREAD))
-@Field final IntRange COOLING_SETPOINT_RANGE = ((MIN_SETPOINT + AUTO_MODE_SETPOINT_SPREAD)..MAX_SETPOINT)
+@Field final IntRange HEATING_SETPOINT_RANGE = (MIN_SETPOINT..MAX_SETPOINT)
+@Field final IntRange COOLING_SETPOINT_RANGE = (MIN_SETPOINT..MAX_SETPOINT)
 
 // defaults
 @Field final String   DEFAULT_MODE = MODE.OFF
-@Field final String   DEFAULT_FAN_MODE = FAN_MODE.AUTO
+//@Field final String   DEFAULT_FAN_MODE = FAN_MODE.AUTO
 @Field final String   DEFAULT_OP_STATE = OP_STATE.IDLE
 @Field final String   DEFAULT_PREVIOUS_STATE = OP_STATE.HEATING
 @Field final String   DEFAULT_SETPOINT_TYPE = SETPOINT_TYPE.HEATING
 @Field final Integer  DEFAULT_TEMPERATURE = 22
 @Field final Integer  DEFAULT_HEATING_SETPOINT = 23
-@Field final Integer  DEFAULT_COOLING_SETPOINT = 24
+@Field final Integer  DEFAULT_COOLING_SETPOINT = 18
 @Field final Integer  DEFAULT_THERMOSTAT_SETPOINT = DEFAULT_HEATING_SETPOINT
 @Field final Integer  DEFAULT_HUMIDITY = 52
 
 
 metadata {
     // Automatically generated. Make future change here.
-    definition (name: "Simulated Thermostat Celsius", namespace: "smartthings/testing", author: "SmartThings/Borislav Velkov") {
+    definition (name: "Virtual Thermostat Celsius", namespace: "smartthings/testing", author: "SmartThings/Borislav Velkov") {
         capability "Sensor"
         capability "Actuator"
         capability "Health Check"
@@ -151,11 +151,11 @@ metadata {
             state "off",            action: "cycleMode", nextState: "updating", icon: "st.thermostat.heating-cooling-off", backgroundColor: "#CCCCCC", defaultState: true
             state "heat",           action: "cycleMode", nextState: "updating", icon: "st.thermostat.heat"
             state "cool",           action: "cycleMode", nextState: "updating", icon: "st.thermostat.cool"
-            state "auto",           action: "cycleMode", nextState: "updating", icon: "st.thermostat.auto"
-            state "emergency heat", action: "cycleMode", nextState: "updating", icon: "st.thermostat.emergency-heat"
+            //state "auto",           action: "cycleMode", nextState: "updating", icon: "st.thermostat.auto"
+            //state "emergency heat", action: "cycleMode", nextState: "updating", icon: "st.thermostat.emergency-heat"
             state "updating", label: "Working"
         }
-
+        /*
         standardTile("fanMode", "device.thermostatFanMode", width: 2, height: 2, decoration: "flat") {
             state "off",       action: "cycleFanMode", nextState: "updating", icon: "st.thermostat.fan-off", backgroundColor: "#CCCCCC", defaultState: true
             state "auto",      action: "cycleFanMode", nextState: "updating", icon: "st.thermostat.fan-auto"
@@ -163,25 +163,25 @@ metadata {
             state "circulate", action: "cycleFanMode", nextState: "updating", icon: "st.thermostat.fan-circulate"
             state "updating", label: "Working"
         }
-
+        */
         valueTile("heatingSetpoint", "device.heatingSetpoint", width: 2, height: 2, decoration: "flat") {
             state "heat", label:'Day\n${currentValue}°', unit: "°C", backgroundColor:"#E86D13"
         }
         standardTile("heatDown", "device.temperature", width: 1, height: 1, decoration: "flat") {
-            state "default", label: "heat", action: "heatDown", icon: "st.thermostat.thermostat-down"
+            state "default", label: "temp", action: "heatDown", icon: "st.thermostat.thermostat-down"
         }
         standardTile("heatUp", "device.temperature", width: 1, height: 1, decoration: "flat") {
-            state "default", label: "heat", action: "heatUp", icon: "st.thermostat.thermostat-up"
+            state "default", label: "temp", action: "heatUp", icon: "st.thermostat.thermostat-up"
         }
 
         valueTile("coolingSetpoint", "device.coolingSetpoint", width: 2, height: 2, decoration: "flat") {
             state "cool", label: 'Night\n${currentValue}°', unit: "°C", backgroundColor: "#00A0DC"
         }
         standardTile("coolDown", "device.temperature", width: 1, height: 1, decoration: "flat") {
-            state "default", label: "cool", action: "coolDown", icon: "st.thermostat.thermostat-down"
+            state "default", label: "temp", action: "coolDown", icon: "st.thermostat.thermostat-down"
         }
         standardTile("coolUp", "device.temperature", width: 1, height: 1, decoration: "flat") {
-            state "default", label: "cool", action: "coolUp", icon: "st.thermostat.thermostat-up"
+            state "default", label: "temp", action: "coolUp", icon: "st.thermostat.thermostat-up"
         }
 
         valueTile("roomTemp", "device.temperature", width: 2, height: 1, decoration: "flat") {
@@ -204,25 +204,26 @@ metadata {
                 [value: 96, color: "#BC2323"]
             ]
         }
+        /*
         standardTile("tempDown", "device.temperature", width: 1, height: 1, decoration: "flat") {
             state "default", label: "temp", action: "tempDown", icon: "st.thermostat.thermostat-down"
         }
         standardTile("tempUp", "device.temperature", width: 1, height: 1, decoration: "flat") {
             state "default", label: "temp", action: "tempUp", icon: "st.thermostat.thermostat-up"
         }
-
+        
         // To modify the simulation environment
         valueTile("simControlLabel", "device.switch", width: 4, height: 1, decoration: "flat") {
             state "default", label: "Simulated Environment Control"
         }
-
+        */
         valueTile("blank1x1", "device.switch", width: 1, height: 1, decoration: "flat") {
             state "default", label: ""
         }
         valueTile("blank2x1", "device.switch", width: 2, height: 1, decoration: "flat") {
             state "default", label: ""
         }
-
+        /*
         valueTile("humiditySliderLabel", "device.humidity", width: 3, height: 1, decoration: "flat") {
             state "default", label: 'Simulated Humidity: ${currentValue}%'
         }
@@ -230,15 +231,15 @@ metadata {
         controlTile("humiditySlider", "device.humidity", "slider", width: 1, height: 1, range: "(0..100)") {
             state "humidity", action: "setHumidityPercent"
         }
-
+        */
         standardTile("refresh", "device.switch", inactiveLabel: false, decoration: "flat", width: 2, height: 2) {
             state "default", label: "", action: "refresh", icon: "st.secondary.refresh"
         }
-
+        /*
         valueTile("reset", "device.switch", width: 2, height: 2, decoration: "flat") {
             state "default", label: "Reset to Defaults", action: "configure"
         }
-
+        */
         standardTile("deviceHealthControl", "device.healthStatus", decoration: "flat", width: 2, height: 2, inactiveLabel: false) {
             state "online",  label: "ONLINE", backgroundColor: "#00A0DC", action: "markDeviceOffline", icon: "st.Health & Wellness.health9", nextState: "goingOffline", defaultState: true
             state "offline", label: "OFFLINE", backgroundColor: "#E86D13", action: "markDeviceOnline", icon: "st.Health & Wellness.health9", nextState: "goingOnline"
@@ -253,11 +254,11 @@ metadata {
             "coolDown", "coolUp",
             "heatingSetpoint",
             "coolingSetpoint",
-            "fanMode",
-            "blank2x1", "blank2x1",
-            "deviceHealthControl", "refresh", "reset",
-            "blank1x1", "simControlLabel", "blank1x1",
-            "tempDown", "tempUp", "humiditySliderLabel", "humiditySlider",
+            //"fanMode",
+            //"blank2x1", "blank2x1",
+            "deviceHealthControl", "refresh",// "reset",
+            //"blank1x1", "simControlLabel", "blank1x1",
+            //"tempDown", "tempUp", "humiditySliderLabel", "humiditySlider",
             "roomTemp"
         ])
     }
