@@ -464,18 +464,18 @@ private setHeatingSetpointInternal(Double degreesF) {
 private heatUp() {
     log.trace "Executing 'heatUp'"
     def newHsp = getHeatingSetpoint() + 1
-    if (getThermostatMode() in HEAT_ONLY_MODES) {
+    //if (getThermostatMode() in HEAT_ONLY_MODES) {
         setHeatingSetpoint(newHsp)
-    }
+    //}
     done()
 }
 
 private heatDown() {
     log.trace "Executing 'heatDown'"
     def newHsp = getHeatingSetpoint() - 1
-    if (getThermostatMode() in HEAT_ONLY_MODES) {
+    //if (getThermostatMode() in HEAT_ONLY_MODES) {
         setHeatingSetpoint(newHsp)
-    }
+    //}
     done()
 }
 
@@ -500,18 +500,18 @@ private setCoolingSetpointInternal(Double degreesF) {
 private coolUp() {
     log.trace "Executing 'coolUp'"
     def newCsp = getCoolingSetpoint() + 1
-    if (getThermostatMode() in COOL_ONLY_MODES) {
+    //if (getThermostatMode() in COOL_ONLY_MODES) {
         setCoolingSetpoint(newCsp)
-    }
+    //}
     done()
 }
 
 private coolDown() {
     log.trace "Executing 'coolDown'"
     def newCsp = getCoolingSetpoint() - 1
-    if (getThermostatMode() in COOL_ONLY_MODES) {
+    //if (getThermostatMode() in COOL_ONLY_MODES) {
         setCoolingSetpoint(newCsp)
-    }
+    //}
     done()
 }
 
