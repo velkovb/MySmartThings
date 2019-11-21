@@ -70,7 +70,7 @@ import groovy.transform.Field
 // defaults
 @Field final String   DEFAULT_MODE = MODE.OFF
 //@Field final String   DEFAULT_FAN_MODE = FAN_MODE.AUTO
-@Field final String   DEFAULT_OP_STATE = OP_STATE.IDLE
+@Field final String   DEFAULT_OP_STATE = OP_STATE.HEATING
 @Field final String   DEFAULT_PREVIOUS_STATE = OP_STATE.HEATING
 @Field final String   DEFAULT_SETPOINT_TYPE = SETPOINT_TYPE.HEATING
 @Field final Integer  DEFAULT_TEMPERATURE = 22
@@ -127,10 +127,8 @@ metadata {
             }
             tileAttribute("device.thermostatOperatingState", key: "OPERATING_STATE") {
                 attributeState("idle", backgroundColor: "#FFFFFF")
-                attributeState("day heating", backgroundColor: "#E86D13")
-                attributeState("night heating", backgroundColor: "#00A0DC")
-                //attributeState("heating", backgroundColor: "#E86D13")
-                //attributeState("cooling", backgroundColor: "#00A0DC")
+                attributeState("heating", backgroundColor: "#E86D13")
+                attributeState("cooling", backgroundColor: "#00A0DC")
             }
             tileAttribute("device.thermostatMode", key: "THERMOSTAT_MODE") {
                 attributeState("off",  label: '${name}')
@@ -149,8 +147,8 @@ metadata {
         
         standardTile("mode", "device.thermostatMode", width: 2, height: 2, decoration: "flat") {
             state "off",            action: "cycleMode", nextState: "updating", icon: "st.thermostat.heating-cooling-off", backgroundColor: "#CCCCCC"
-            state "heat",           action: "cycleMode", nextState: "updating", icon: "st.thermostat.heat", defaultState: true
-            state "cool",           action: "cycleMode", nextState: "updating", icon: "st.thermostat.cool"
+            state "heat",           action: "cycleMode", nextState: "updating", icon: "st.thermostat.heat", defaultState: true, label: "Day"
+            state "cool",           action: "cycleMode", nextState: "updating", icon: "st.thermostat.cool", label: "Night"
             //state "auto",           action: "cycleMode", nextState: "updating", icon: "st.thermostat.auto"
             //state "emergency heat", action: "cycleMode", nextState: "updating", icon: "st.thermostat.emergency-heat"
             state "updating", label: "Working"
