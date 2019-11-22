@@ -97,8 +97,8 @@ metadata {
         capability "Configuration"
         capability "Refresh"
 
-        attribute "dayTime", "date"
-        attribute "NightTime", "date"
+        attribute "dayTime", "string"
+        attribute "nightTime", "string"
 
         command "tempUp"
         command "tempDown"
