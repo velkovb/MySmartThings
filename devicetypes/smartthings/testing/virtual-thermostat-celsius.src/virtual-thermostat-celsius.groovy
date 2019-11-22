@@ -11,11 +11,16 @@
  *  for the specific language governing permissions and limitations under the License.
  *
  */
+
+ // TODO
+ // Add ability to configure day and night hours
+ // Remove action from mode tile and off mode as well.
+
 import groovy.transform.Field
 
 // enummaps
 @Field final Map      MODE = [
-    OFF:   "off",
+    //OFF:   "off",
     HEAT:  "heat",
     //AUTO:  "auto",
     COOL:  "cool",
@@ -92,6 +97,9 @@ metadata {
         capability "Configuration"
         capability "Refresh"
 
+        attribute "dayTime", "date"
+        attribute "NightTime", "date"
+
         command "tempUp"
         command "tempDown"
         command "heatUp"
@@ -111,6 +119,13 @@ metadata {
 
         command "markDeviceOnline"
         command "markDeviceOffline"
+    }
+
+    preferences {
+        section("Day and Night time configuration") {
+            input "dayTime", "time", title: "Day", required: true
+            input "nightTime", "time", title: "Night", required: true
+        }
     }
 
     tiles(scale: 2) {
@@ -145,13 +160,13 @@ metadata {
             }
         }
         
-        standardTile("mode", "device.thermostatMode", width: 2, height: 2, decoration: "flat") {
-            state "off",            action: "cycleMode", nextState: "updating", icon: "st.thermostat.heating-cooling-off", backgroundColor: "#CCCCCC"
-            state "heat",           action: "cycleMode", nextState: "updating", defaultState: true, label: "Day"//, icon: "st.thermostat.heat"
-            state "cool",           action: "cycleMode", nextState: "updating", label: "Night"//, icon: "st.thermostat.cool"
+        standardTile("mode", "device.thermostatMode", width: 2, height: 1, decoration: "flat") {
+            //state "off",            action: "cycleMode", nextState: "updating", icon: "st.thermostat.heating-cooling-off", backgroundColor: "#CCCCCC"
+            state "heat", defaultState: true, label: "Day"//, icon: "st.thermostat.heat",           action: "cycleMode", nextState: "updating"
+            state "cool", label: "Night"//, icon: "st.thermostat.cool",           action: "cycleMode", nextState: "updating"
             //state "auto",           action: "cycleMode", nextState: "updating", icon: "st.thermostat.auto"
             //state "emergency heat", action: "cycleMode", nextState: "updating", icon: "st.thermostat.emergency-heat"
-            state "updating", label: "Working"
+            //state "updating", label: "Working"
         }
         /*
         standardTile("fanMode", "device.thermostatFanMode", width: 2, height: 2, decoration: "flat") {
@@ -181,7 +196,13 @@ metadata {
         standardTile("coolUp", "device.temperature", width: 1, height: 1, decoration: "flat") {
             state "default", label: "temp", action: "coolUp", icon: "st.thermostat.thermostat-up"
         }
-        
+        valueTile("dayTime", "settings.dayTime", width: 2, height: 2, decoration: "flat") {
+            state "default", label: "DayTime\n${currentValue}"
+        }
+        valueTile("nightTime", "settings.nightTime", width: 2, height: 2, decoration: "flat") {
+            state "default", label: "NightTime${currentValue}"
+        }
+
         valueTile("roomTemp", "device.temperature", width: 2, height: 1, decoration: "flat") {
             state "default", label:'${currentValue}°', unit: "°C", backgroundColors: [
                 // Celsius Color Range
@@ -258,6 +279,8 @@ metadata {
             //"blank1x1", "simControlLabel", "blank1x1",
             //"tempDown", "tempUp", "humiditySliderLabel", "humiditySlider",
             //"roomTemp"
+            "dayTime",
+            "nightTime"
         ])
     }
 }
