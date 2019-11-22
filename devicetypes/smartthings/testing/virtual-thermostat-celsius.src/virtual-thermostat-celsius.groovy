@@ -97,8 +97,8 @@ metadata {
         capability "Configuration"
         capability "Refresh"
 
-        attribute "dayTime", "string"
-        attribute "nightTime", "string"
+        attribute "dayTime", "date"
+        attribute "nightTime", "date"
 
         command "tempUp"
         command "tempDown"
@@ -379,6 +379,8 @@ def refresh() {
     sendEvent(name: "heatingSetpoint", value: getHeatingSetpoint(), unit: "°C")
     sendEvent(name: "temperature", value: getTemperature(), unit: "°C")
     sendEvent(name: "humidity", value: getHumidityPercent(), unit: "%")
+    sendEvent(name: "dayTime", value: dayTime)
+    sendEvent(name: "nightTime", value: nightTime)
     done()
 }
 
