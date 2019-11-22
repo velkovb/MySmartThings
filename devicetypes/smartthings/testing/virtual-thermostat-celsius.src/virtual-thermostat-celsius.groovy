@@ -197,10 +197,10 @@ metadata {
             state "default", label: "temp", action: "coolUp", icon: "st.thermostat.thermostat-up"
         }
         valueTile("dayTime", "device.dayTime", width: 2, height: 2, decoration: "flat") {
-            state "default", label: "DayTime\n${currentValue}"
+            state "default", label: 'DayTime\n${currentValue}'
         }
         valueTile("nightTime", "device.nightTime", width: 2, height: 2, decoration: "flat") {
-            state "default", label: "NightTime\n${currentValue}"
+            state "default", label: 'NightTime\n${currentValue}'
         }
 
         valueTile("roomTemp", "device.temperature", width: 2, height: 1, decoration: "flat") {
