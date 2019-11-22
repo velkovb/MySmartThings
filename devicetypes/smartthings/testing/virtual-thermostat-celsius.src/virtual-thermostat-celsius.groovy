@@ -93,8 +93,8 @@ metadata {
         capability "Configuration"
         capability "Refresh"
 
-        attribute "dayTime", "string"
-        attribute "nightTime", "string"
+        attribute "schedule", "string"
+        attribute "speed", "string"
 
         command "tempUp"
         command "tempDown"
@@ -192,10 +192,10 @@ metadata {
         standardTile("coolUp", "device.temperature", width: 1, height: 1, decoration: "flat") {
             state "default", label: "temp", action: "coolUp", icon: "st.thermostat.thermostat-up"
         }
-        valueTile("dayTime", "device.dayTime", width: 2, height: 2, decoration: "flat") {
+        valueTile("dayTime", "device.schedule", width: 2, height: 2, decoration: "flat") {
             state "default", label: 'DayTime\n${currentValue}'
         }
-        valueTile("nightTime", "device.nightTime", width: 2, height: 2, decoration: "flat") {
+        valueTile("nightTime", "device.speed", width: 2, height: 2, decoration: "flat") {
             state "default", label: 'NightTime\n${currentValue}'
         }
 
@@ -333,8 +333,8 @@ private initialize() {
     sendEvent(name: "coolingSetpointMin", value: COOLING_SETPOINT_RANGE.getFrom(), unit: "°C")
     sendEvent(name: "coolingSetpointMax", value: COOLING_SETPOINT_RANGE.getTo(), unit: "°C")
     sendEvent(name: "thermostatMode", value: DEFAULT_MODE)
-    sendEvent(name: "dayTime", value: Date.parse("yyyy-MM-dd'T'HH:mm:ss.SSS",dayTime).format("H:mm a"))
-    sendEvent(name: "nightTime", value: Date.parse("yyyy-MM-dd'T'HH:mm:ss.SSS",nightTime).format("H:mm a"))
+    sendEvent(name: "schedule", value: Date.parse("yyyy-MM-dd'T'HH:mm:ss.SSS",dayTime).format("H:mm a"))
+    sendEvent(name: "speed", value: Date.parse("yyyy-MM-dd'T'HH:mm:ss.SSS",nightTime).format("H:mm a"))
     //sendEvent(name: "thermostatFanMode", value: DEFAULT_FAN_MODE)
     sendEvent(name: "thermostatOperatingState", value: DEFAULT_OP_STATE)
 
@@ -372,8 +372,8 @@ def refresh() {
     sendEvent(name: "heatingSetpoint", value: getHeatingSetpoint(), unit: "°C")
     sendEvent(name: "temperature", value: getTemperature(), unit: "°C")
     sendEvent(name: "humidity", value: getHumidityPercent(), unit: "%")
-    sendEvent(name: "dayTime", value: Date.parse("yyyy-MM-dd'T'HH:mm:ss.SSS",dayTime).format("H:mm a"))
-    sendEvent(name: "nightTime", value: Date.parse("yyyy-MM-dd'T'HH:mm:ss.SSS",nightTime).format("H:mm a"))
+    sendEvent(name: "schedule", value: Date.parse("yyyy-MM-dd'T'HH:mm:ss.SSS",dayTime).format("H:mm a"))
+    sendEvent(name: "speed", value: Date.parse("yyyy-MM-dd'T'HH:mm:ss.SSS",nightTime).format("H:mm a"))
     done()
 }
 
