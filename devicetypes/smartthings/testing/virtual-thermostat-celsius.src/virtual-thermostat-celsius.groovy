@@ -97,8 +97,8 @@ metadata {
         capability "Configuration"
         capability "Refresh"
 
-        attribute "dayTime", "date"
-        attribute "nightTime", "date"
+        attribute "dayTime", "string"
+        attribute "nightTime", "string"
 
         command "tempUp"
         command "tempDown"
@@ -340,8 +340,8 @@ private initialize() {
     sendEvent(name: "coolingSetpointMin", value: COOLING_SETPOINT_RANGE.getFrom(), unit: "°C")
     sendEvent(name: "coolingSetpointMax", value: COOLING_SETPOINT_RANGE.getTo(), unit: "°C")
     sendEvent(name: "thermostatMode", value: DEFAULT_MODE)
-    sendEvent(name: "dayTime", value: dayTime)
-    sendEvent(name: "nightTime", value: nightTime)
+    sendEvent(name: "dayTime", value: dayTime.format("h:mm a", location.timeZone))
+    sendEvent(name: "nightTime", value: nightTime.format("h:mm a"))
     //sendEvent(name: "thermostatFanMode", value: DEFAULT_FAN_MODE)
     sendEvent(name: "thermostatOperatingState", value: DEFAULT_OP_STATE)
 
