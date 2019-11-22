@@ -333,8 +333,8 @@ private initialize() {
     sendEvent(name: "coolingSetpointMin", value: COOLING_SETPOINT_RANGE.getFrom(), unit: "°C")
     sendEvent(name: "coolingSetpointMax", value: COOLING_SETPOINT_RANGE.getTo(), unit: "°C")
     sendEvent(name: "thermostatMode", value: DEFAULT_MODE)
-    sendEvent(name: "schedule", value: Date.parse("yyyy-MM-dd'T'HH:mm:ss.SSS",dayTime).format("H:mm a"))
-    sendEvent(name: "speed", value: Date.parse("yyyy-MM-dd'T'HH:mm:ss.SSS",nightTime).format("H:mm a"))
+    sendEvent(name: "schedule", value: Date.parse("yyyy-MM-dd'T'HH:mm:ss.SSS",dayTime).format("HH:mm"))
+    sendEvent(name: "speed", value: Date.parse("yyyy-MM-dd'T'HH:mm:ss.SSS",nightTime).format("HH:mm"))
     //sendEvent(name: "thermostatFanMode", value: DEFAULT_FAN_MODE)
     sendEvent(name: "thermostatOperatingState", value: DEFAULT_OP_STATE)
 
