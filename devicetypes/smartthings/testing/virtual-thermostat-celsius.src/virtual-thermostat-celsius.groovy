@@ -268,14 +268,11 @@ metadata {
 
         main("roomTemp")
         details(["thermostatMulti",
-            "heatDown", "heatUp",
-            "mode",
-            "coolDown", "coolUp",
-            "heatingSetpoint",
-            "coolingSetpoint",
+            "heatDown", "heatUp", "mode", "coolDown", "coolUp",
+            "heatingSetpoint", "deviceHealthControl", "refresh", "coolingSetpoint",
             //"fanMode",
             //"blank2x1", "blank2x1",
-            "deviceHealthControl", "refresh",// "reset",
+            // "reset",
             //"blank1x1", "simControlLabel", "blank1x1",
             //"tempDown", "tempUp", "humiditySliderLabel", "humiditySlider",
             //"roomTemp"
@@ -340,8 +337,8 @@ private initialize() {
     sendEvent(name: "coolingSetpointMin", value: COOLING_SETPOINT_RANGE.getFrom(), unit: "°C")
     sendEvent(name: "coolingSetpointMax", value: COOLING_SETPOINT_RANGE.getTo(), unit: "°C")
     sendEvent(name: "thermostatMode", value: DEFAULT_MODE)
-    sendEvent(name: "dayTime", value: dayTime.format("h:mm a", location.timeZone))
-    sendEvent(name: "nightTime", value: nightTime.format("h:mm a"))
+    sendEvent(name: "dayTime", value: Date.parse("yyyy-MM-dd'T'HH:mm:ss.SSS",dayTime).format("H:mm a"))
+    sendEvent(name: "nightTime", value: Date.parse("yyyy-MM-dd'T'HH:mm:ss.SSS",nightTime).format("H:mm a"))
     //sendEvent(name: "thermostatFanMode", value: DEFAULT_FAN_MODE)
     sendEvent(name: "thermostatOperatingState", value: DEFAULT_OP_STATE)
 
@@ -379,8 +376,8 @@ def refresh() {
     sendEvent(name: "heatingSetpoint", value: getHeatingSetpoint(), unit: "°C")
     sendEvent(name: "temperature", value: getTemperature(), unit: "°C")
     sendEvent(name: "humidity", value: getHumidityPercent(), unit: "%")
-    sendEvent(name: "dayTime", value: dayTime)
-    sendEvent(name: "nightTime", value: nightTime)
+    sendEvent(name: "dayTime", value: Date.parse("yyyy-MM-dd'T'HH:mm:ss.SSS",dayTime).format("H:mm a"))
+    sendEvent(name: "nightTime", value: Date.parse("yyyy-MM-dd'T'HH:mm:ss.SSS",nightTime).format("H:mm a"))
     done()
 }
 
