@@ -94,7 +94,7 @@ metadata {
         capability "Refresh"
 
         attribute "schedule", "string"
-        attribute "", "string"
+        attribute "speed", "string"
 
         command "tempUp"
         command "tempDown"
