@@ -94,7 +94,7 @@ metadata {
         capability "Refresh"
 
         attribute "schedule", "string"
-        attribute "speed", "string"
+        attribute "sessionStatus", "string"
 
         command "tempUp"
         command "tempDown"
@@ -195,7 +195,7 @@ metadata {
         valueTile("dayTime", "device.schedule", width: 2, height: 2, decoration: "flat") {
             state "default", label: 'DayTime\n${currentValue}'
         }
-        valueTile("nightTime", "device.speed", width: 2, height: 2, decoration: "flat") {
+        valueTile("nightTime", "device.thermostatFanMode", width: 2, height: 2, decoration: "flat") {
             state "default", label: 'NightTime\n${currentValue}'
         }
 
@@ -334,7 +334,7 @@ private initialize() {
     sendEvent(name: "coolingSetpointMax", value: COOLING_SETPOINT_RANGE.getTo(), unit: "°C")
     sendEvent(name: "thermostatMode", value: DEFAULT_MODE)
     sendEvent(name: "schedule", value: Date.parse("yyyy-MM-dd'T'HH:mm:ss.SSS",dayTime).format("HH:mm"))
-    sendEvent(name: "speed", value: Date.parse("yyyy-MM-dd'T'HH:mm:ss.SSS",nightTime).format("HH:mm"))
+    sendEvent(name: "thermostatFanMode", value: Date.parse("yyyy-MM-dd'T'HH:mm:ss.SSS",nightTime).format("HH:mm"))
     //sendEvent(name: "thermostatFanMode", value: DEFAULT_FAN_MODE)
     sendEvent(name: "thermostatOperatingState", value: DEFAULT_OP_STATE)
 
@@ -373,7 +373,7 @@ def refresh() {
     sendEvent(name: "temperature", value: getTemperature(), unit: "°C")
     sendEvent(name: "humidity", value: getHumidityPercent(), unit: "%")
     sendEvent(name: "schedule", value: Date.parse("yyyy-MM-dd'T'HH:mm:ss.SSS",dayTime).format("HH:mm"))
-    sendEvent(name: "speed", value: Date.parse("yyyy-MM-dd'T'HH:mm:ss.SSS",nightTime).format("HH:mm"))
+    sendEvent(name: "thermostatFanMode", value: Date.parse("yyyy-MM-dd'T'HH:mm:ss.SSS",nightTime).format("HH:mm"))
     done()
 }
 
