@@ -12,10 +12,6 @@
  *
  */
 
- // TODO
- // Add ability to configure day and night hours
- // Remove action from mode tile and off mode as well.
-
 import groovy.transform.Field
 
 // enummaps
@@ -271,13 +267,13 @@ metadata {
             "heatDown", "heatUp", "mode", "coolDown", "coolUp",
             "heatingSetpoint", "deviceHealthControl", "refresh", "coolingSetpoint",
             //"fanMode",
-            //"blank2x1", "blank2x1",
+            //"blank2x1", 
             // "reset",
             //"blank1x1", "simControlLabel", "blank1x1",
             //"tempDown", "tempUp", "humiditySliderLabel", "humiditySlider",
             //"roomTemp"
-            "dayTime",
-            "nightTime"
+            "blank2x1",
+            "dayTime", "nightTime"
         ])
     }
 }
