@@ -196,11 +196,11 @@ metadata {
         standardTile("coolUp", "device.temperature", width: 1, height: 1, decoration: "flat") {
             state "default", label: "temp", action: "coolUp", icon: "st.thermostat.thermostat-up"
         }
-        valueTile("dayTime", "settings.dayTime", width: 2, height: 2, decoration: "flat") {
+        valueTile("dayTime", "device.dayTime", width: 2, height: 2, decoration: "flat") {
             state "default", label: "DayTime\n${currentValue}"
         }
-        valueTile("nightTime", "settings.nightTime", width: 2, height: 2, decoration: "flat") {
-            state "default", label: "NightTime${currentValue}"
+        valueTile("nightTime", "device.nightTime", width: 2, height: 2, decoration: "flat") {
+            state "default", label: "NightTime\n${currentValue}"
         }
 
         valueTile("roomTemp", "device.temperature", width: 2, height: 1, decoration: "flat") {
@@ -340,6 +340,8 @@ private initialize() {
     sendEvent(name: "coolingSetpointMin", value: COOLING_SETPOINT_RANGE.getFrom(), unit: "°C")
     sendEvent(name: "coolingSetpointMax", value: COOLING_SETPOINT_RANGE.getTo(), unit: "°C")
     sendEvent(name: "thermostatMode", value: DEFAULT_MODE)
+    sendEvent(name: "dayTime", value: dayTime)
+    sendEvent(name: "nightTime", value: nightTime)
     //sendEvent(name: "thermostatFanMode", value: DEFAULT_FAN_MODE)
     sendEvent(name: "thermostatOperatingState", value: DEFAULT_OP_STATE)
 
