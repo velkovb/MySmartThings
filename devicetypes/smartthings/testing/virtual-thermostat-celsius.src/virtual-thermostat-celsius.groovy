@@ -231,14 +231,14 @@ metadata {
         valueTile("simControlLabel", "device.switch", width: 4, height: 1, decoration: "flat") {
             state "default", label: "Simulated Environment Control"
         }
-        
+        */
         valueTile("blank1x1", "device.switch", width: 1, height: 1, decoration: "flat") {
             state "default", label: ""
         }
         valueTile("blank2x1", "device.switch", width: 2, height: 1, decoration: "flat") {
             state "default", label: ""
         }
-        
+        /*
         valueTile("humiditySliderLabel", "device.humidity", width: 3, height: 1, decoration: "flat") {
             state "default", label: 'Simulated Humidity: ${currentValue}%'
         }
