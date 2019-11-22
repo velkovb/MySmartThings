@@ -93,8 +93,8 @@ metadata {
         capability "Configuration"
         capability "Refresh"
 
+        //used to store daytime and thermostatFanMode for nighttime...
         attribute "schedule", "string"
-        attribute "sessionStatus", "string"
 
         command "tempUp"
         command "tempDown"
